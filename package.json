@@ -1,0 +1,14 @@
+{
+  "name": "e-code-api",
+  "version": "0.0.0",
+  "repository": "https://github.com/Makotty/E-Code_api.git",
+  "author": "Mako<makotty.mako@gmail.com>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "format": "./node_modules/.bin/prettier --write '**/*.rb'"
+  },
+  "devDependencies": {
+    "@prettier/plugin-ruby": "^2.0.0",
+    "prettier": "^2.5.1"
+  }
+}
