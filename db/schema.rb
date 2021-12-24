@@ -13,9 +13,11 @@
 ActiveRecord::Schema.define(version: 2021_12_24_060208) do
   create_table 'episodes', force: :cascade do |t|
     t.text 'content'
-    t.integer 'user_id'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.string 'contributor_name'
+    t.string 'contributor_image'
+    t.integer 'user_id'
     t.index ['user_id'], name: 'index_episodes_on_user_id'
   end
 
