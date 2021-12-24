@@ -44,6 +44,8 @@ class Api::V1::EpisodesController < ApplicationController
   private
 
   def episode_params
-    params.permit(:content).merge(user_id: current_api_v1_user.id)
+    params
+      .permit(:content, :contributor_name, :contributor_image)
+      .merge(user_id: current_api_v1_user.id)
   end
 end
