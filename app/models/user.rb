@@ -11,4 +11,5 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :episodes, dependent: :destroy
+  has_many :episode_comments
 end

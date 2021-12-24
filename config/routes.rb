@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[index show]
       resources :episodes
       resources :user_episodes
+      resources :episode_comments
     end
   end
 end
