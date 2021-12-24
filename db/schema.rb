@@ -10,47 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_24_060208) do
-  create_table 'episodes', force: :cascade do |t|
-    t.text 'content'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.string 'contributor_name'
-    t.string 'contributor_image'
-    t.integer 'user_id'
-    t.index ['user_id'], name: 'index_episodes_on_user_id'
+ActiveRecord::Schema.define(version: 2021_12_24_171939) do
+
+  create_table "episode_comments", force: :cascade do |t|
+    t.string "content"
+    t.integer "user_id", null: false
+    t.integer "episode_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["episode_id"], name: "index_episode_comments_on_episode_id"
+    t.index ["user_id"], name: "index_episode_comments_on_user_id"
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'provider', default: 'email', null: false
-    t.string 'uid', default: '', null: false
-    t.string 'encrypted_password', default: '', null: false
-    t.string 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.boolean 'allow_password_change', default: false
-    t.datetime 'remember_created_at'
-    t.string 'confirmation_token'
-    t.datetime 'confirmed_at'
-    t.datetime 'confirmation_sent_at'
-    t.string 'unconfirmed_email'
-    t.string 'name'
-    t.string 'email'
-    t.string 'birth_day'
-    t.string 'file_url'
-    t.text 'tokens'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.index ['confirmation_token'],
-            name: 'index_users_on_confirmation_token',
-            unique: true
-    t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'],
-            name: 'index_users_on_reset_password_token',
-            unique: true
-    t.index %w[uid provider],
-            name: 'index_users_on_uid_and_provider',
-            unique: true
+  create_table "episodes", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "contributor_name"
+    t.string "contributor_image"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_episodes_on_user_id"
   end
 
-  add_foreign_key 'episodes', 'users'
+  create_table "users", force: :cascade do |t|
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.boolean "allow_password_change", default: false
+    t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.string "name"
+    t.string "email"
+    t.string "birth_day"
+    t.string "file_url"
+    t.text "tokens"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
+  end
+
+  add_foreign_key "episode_comments", "episodes"
+  add_foreign_key "episode_comments", "users"
+  add_foreign_key "episodes", "users"
 end
