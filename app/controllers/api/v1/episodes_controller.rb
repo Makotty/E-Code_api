@@ -1,11 +1,12 @@
 class Api::V1::EpisodesController < ApplicationController
   before_action :authenticate_api_v1_user!, only: %i[create update destroy]
   def index
-    render json: Episode.all
+    render json: Episode.all.to_json(include: %i[episode_comments])
   end
 
   def show
-    render json: Episode.find(params[:id])
+    episode = Episode.find(params[:id]).to_json(include: %i[episode_comments])
+    render json: episode
   end
 
   def create
