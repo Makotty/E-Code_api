@@ -1,4 +1,5 @@
 class Api::V1::EpisodesController < ApplicationController
+  before_action :authenticate_api_v1_user!, only: %i[create update destroy]
   def index
     render json: Episode.all
   end
@@ -18,22 +19,31 @@ class Api::V1::EpisodesController < ApplicationController
 
   def update
     episode = Episode.find(params[:id])
-    if episode.update(episode_params)
-      render json: episode
+
+    if current_api_v1_user.id == episode.user_id
+      if episode.update(episode_params)
+        render json: episode
+      else
+        render json: episode.errors, status: 422
+      end
     else
-      render json: episode.errors, status: 422
+      render json: { message: '更新できませんでした' }, status: 422
     end
   end
 
   def destroy
     episode = Episode.find(params[:id])
-    episode.destroy
-    render json: episode
+    if current_api_v1_user.id == episode.user_id
+      episode.destroy
+      render json: episode
+    else
+      render json: { message: '削除できませんでした' }
+    end
   end
 
   private
 
   def episode_params
-    params.permit(:content)
+    params.permit(:content).merge(user_id: current_api_v1_user.id)
   end
 end
