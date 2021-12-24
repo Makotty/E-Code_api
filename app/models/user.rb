@@ -9,4 +9,6 @@ class User < ActiveRecord::Base
          :rememberable,
          :validatable
   include DeviseTokenAuth::Concerns::User
+
+  has_many :episodes, dependent: :destroy
 end
