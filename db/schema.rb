@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_24_171939) do
+ActiveRecord::Schema.define(version: 2021_12_25_152134) do
 
   create_table "episode_comments", force: :cascade do |t|
     t.string "content"
@@ -18,8 +18,19 @@ ActiveRecord::Schema.define(version: 2021_12_24_171939) do
     t.integer "episode_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "contributor_name"
+    t.string "contributor_image"
     t.index ["episode_id"], name: "index_episode_comments_on_episode_id"
     t.index ["user_id"], name: "index_episode_comments_on_user_id"
+  end
+
+  create_table "episode_favorites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "episode_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["episode_id"], name: "index_episode_favorites_on_episode_id"
+    t.index ["user_id"], name: "index_episode_favorites_on_user_id"
   end
 
   create_table "episodes", force: :cascade do |t|
@@ -59,5 +70,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_171939) do
 
   add_foreign_key "episode_comments", "episodes"
   add_foreign_key "episode_comments", "users"
+  add_foreign_key "episode_favorites", "episodes"
+  add_foreign_key "episode_favorites", "users"
   add_foreign_key "episodes", "users"
 end
